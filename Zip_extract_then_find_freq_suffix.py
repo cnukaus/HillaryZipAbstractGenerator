@@ -1,5 +1,5 @@
 #http://stackoverflow.com/questions/2212643/python-recursive-folder-read
-
+# 4 spaces to indent
 #if zip/RAR files are encrypted, user need to press Enter manualy to skip
 
 import os
@@ -26,7 +26,10 @@ for folder, subs, files in os.walk(rootdir):
                   list1=filename.split('.')
                   l2=["rar","zip"]#set()
                   if list1[-1] in l2:#
-                     subprocess.check_call(["7z.exe","x",os.path.join(folder,filename) ,"-r","-O"+ExtractDir])
+                     try:
+                       subprocess.check_call(["7z.exe","x",os.path.join(folder,filename) ,"-r","-O"+ExtractDir])
+                     except subprocess.CalledProcessError, e:
+                       print "Ping stdout output:\n", e.output
                   else:
                      src=open(os.path.join(folder, filename), 'r')
                      dest=open(os.path.join(ExtractDir, filename), 'w')  #What if file duplicate??
